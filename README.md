@@ -69,3 +69,15 @@ Method #2:
 - `{{ super() }}` -> use this special function to avoid overwriting of base template block contents
 - `{{ url_for('static', filename='<absolute path of files form  static folder>') }}` -> to access files inside a html file
 - `{% include '<filename.html>' %}` -> will include filename.html to a template, but default included file will have access to parent dynamic content & can be accessed by `{{ key }}`
+
+- `g` is a global object in flask, which allows us to store data which is accessible to all parts of application when app is running.
+- `@app.teardown_appcontext` is automatically called whenever a route returns, will be used to close db connection.
+- `hasattr()` method can be used to check if a key exists in a dict or not
+- `sql.connect(<path to db>)` -> to connect to sqlite db
+- `sql.row_factory = sqlite3.Row`  -> to convert response from a tuple to a dict
+- `db = get_db() -> cur = db.execute(<sql statement>) -> cur.fetchall()` -> steps to read data form sql
+- `db = get_db() -> db.execute(<sql statement>) -> db.commit()` -> steps to write data to sql
+- `db.execute('insert into users (name, location) values (?, ?)', ['Geek','USA'])` -> to prevent sql injection.
+
+
+

@@ -5,6 +5,11 @@
 {% block content %}
 <h1>Hello {{name}}, You're on the home page</h1>
 
+<h1>DATA BASE RESULTS</h1>
+{% for ele in results %}
+    <p>Id: {{ ele.id }} | Name: {{ ele.name }} | Location: {{ ele.location }}</p>
+{% endfor %}
+
 {% if display %}
     <h2>Display is set to true</h2>
 {% else %}
