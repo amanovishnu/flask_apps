@@ -57,3 +57,15 @@ Method #2:
  - import session from flask `from flask import session`
  - save data = session['key']
  - fetch data = session['key]
+
+##### ways to access content in html
+- `{{ value }}` -> used for accessing a value for dynamic generation of html
+- `{% text %} {% end text %}` -> used for implementing programing logic inside html using jinja
+- `{% if <condition> %} {% else %} {% endif %}` & `{% for <condition> %} {% endfor %}`
+
+#### template inheritance & include
+- `{% block <blockname> %} {% endblock %}` -> to create a block in base template
+- `{% extends 'base.html' %}` -> include base template in other files
+- `{{ super() }}` -> use this special function to avoid overwriting of base template block contents
+- `{{ url_for('static', filename='<absolute path of files form  static folder>') }}` -> to access files inside a html file
+- `{% include '<filename.html>' %}` -> will include filename.html to a template, but default included file will have access to parent dynamic content & can be accessed by `{{ key }}`

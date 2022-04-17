@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %} testing {% endblock %}
+
+{% block content %}
+<h1>Hello {{name}}, You're on the home page</h1>
+
+{% if display %}
+    <h2>Display is set to true</h2>
+{% else %}
+    <h2>Display is set to false</h2>
+{% endif %}
+
+{% for ele in myList %}
+    <h3>{{ ele }}</h3>
+{% endfor %}
+
+<hr>
+
+{% for ele in listOfDicts %}
+    <h3>{{ ele['name'] }}</h3>
+{% endfor %}
+
+<img src="{{ url_for('static', filename='images/images.jpg') }}" alt="Random Image">
+
+{% include 'include_this.html' %}
+{% endblock %}
