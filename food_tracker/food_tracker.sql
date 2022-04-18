@@ -1,4 +1,4 @@
-create table log_table (
+create table log_date (
     id integer primary key auto_increment,
     entry_date date not null
 );
