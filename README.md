@@ -57,6 +57,7 @@ Method #2:
  - import session from flask `from flask import session`
  - save data = session['key']
  - fetch data = session['key]
+ - remove key from session = session.pop(<key>,None)
 
 ##### ways to access content in html
 - `{{ value }}` -> used for accessing a value for dynamic generation of html
@@ -109,8 +110,16 @@ server {
 - `sudo pip3 install virtualenv` : to install virtualenv
 - `virtualenv <env name>` :to create a new env
 - `source <env name>/bin/activate` : to activate the environment
-- `python -V` : to check the version of python
+- `python -V | python --version` : to check the version of python
 - `pip3 install flask gunicorn` : to install flask and gunicorn application server
 - no need of `app.run()`, gunicorn will take care of this
 - `gunicorn app:app` : to start the server (`gunicorn <filename>:<app name>`)
 - `which git` : to check if git is installed or not, if installed where it's installed
+
+# security in flask
+- `werkzeug.security` module provides security related methods in flask
+- `generate_password_hash` is used to generate a password hash.
+- `check_password_hash` is used to check the password hash.
+- we can import these two methods from `from werkzeug.security import generate_password_hash, check_password_hash`
+- `password = generate_password_hash(<original password>, method=<hashing technique like sha256>)`
+- `check_password_hash(<hashed_pwd>,<actual_pwd>)` : returns true if both passwords match else returns false
