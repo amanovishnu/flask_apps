@@ -1,21 +1,8 @@
-from cmath import log
-from operator import ge
-from flask import Flask, render_template, g, request, jsonify
-import sqlite3
+from flask import Flask, render_template, g, request
 from datetime import datetime
-
+from database import get_db
 
 app = Flask(__name__)
-
-def connect_db():
-    sql = sqlite3.connect('C:\\Users\\vishnu.adepu\\Desktop\\sqlite\\food_log.db')
-    sql.row_factory = sqlite3.Row # converts tuples to dictionary
-    return sql
-
-def get_db():
-    if not hasattr(g, 'sqlite3_db'):
-        g.sqlite_db = connect_db()
-    return g.sqlite_db
 
 @app.teardown_appcontext
 def close_db(error):
@@ -33,15 +20,28 @@ def index():
         db.execute('insert into log_date (entry_date) values (?)',[db_dt])
         db.commit()
 
-    cur = db.execute('select entry_date from log_date order by entry_date desc;')
+    cur = db.execute('''select log_date.entry_date, 
+                        sum(food.protein) as protein,  
+                        sum(food.carbohydrates) as carbohydrates, 
+                        sum(food.fat) as fat , 
+                        sum(food.calories) as calories
+                        from food 
+                        join food_date on food.id = food_date.food_id
+                        join log_date on log_date.id = food_date.log_date_id 
+                        group by log_date.entry_date
+                        order by log_date.entry_date desc;''')
     results = cur.fetchall()
 
     date_results = list()
     for i in results:
         single_date = {}
-        single_date['date'] = i['entry_date']
+        single_date['entry_date'] = i['entry_date']
+        single_date['protein'] = i['protein']
+        single_date['carbohydrates'] = i['carbohydrates']
+        single_date['fat'] = i['fat']
+        single_date['calories'] = i['calories']
         d = datetime.strptime(str(i['entry_date']), '%Y%m%d')
-        single_date['entry_date'] = datetime.strftime(d,'%B %d, %Y')
+        single_date['pretty_date'] = datetime.strftime(d,'%B %d, %Y')
         date_results.append(single_date)
     
     return render_template('home.html',results=date_results)
@@ -64,14 +64,19 @@ def view(date):
     food_results = food_cur.fetchall()
 
     # logic to fetch differnet food items eaten in a given day
-    log_cur = db.execute('''select food.name, food.protein, food.carbohydrates, food.fat, food.calories from food
+    log_cur = db.execute('''select food.name, food.protein, food.carbohydrates, food.fat, food.calories 
+                            from food
                             join food_date on food.id = food_date.food_id
                             join log_date on food_date.log_date_id = log_date.id 
                             where log_date.entry_date = ?''',[date])
     log_results = log_cur.fetchall()
 
     # logic to fetch sum of total food eaten in a given day
-    total_cur = db.execute('''select sum(food.protein) as protein, sum(food.carbohydrates) as carbohydrates, sum(food.fat) as fat, sum(food.calories) as calories from food
+    total_cur = db.execute('''select sum(food.protein) as protein, 
+                            sum(food.carbohydrates) as carbohydrates, 
+                            sum(food.fat) as fat, 
+                            sum(food.calories) as calories 
+                            from food
                             join food_date on food.id = food_date.food_id
                             join log_date on food_date.log_date_id = log_date.id 
                             where log_date.entry_date = ?''',[date])
@@ -94,7 +99,6 @@ def food():
     curr = db.execute('select * from food order by id desc;')
     results = curr.fetchall()
     return render_template('add_food.html', results=results)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
