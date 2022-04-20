@@ -87,7 +87,7 @@ Method #2:
 - other alternatives are python anywhere and heroku (easier & beginner friendly)
 - `os -> ubuntu -> sudo apt-get update -> sudo apt-get install nginx`
 - start nginx: `sudo /etc/init.d/nginx start`
-- remove default configuration: `sudo rm /etc/sites-enabled/default`
+- remove default configuration: `sudo rm /etc/nginx/sites-enabled/default`
 - create a new file with flask settings: `sudo touch /etc/nginx/sites-available/flask_settings`
 - create a link between files: `sudo ln -s /etc/nginx/sites-available/flask_settings /etc/nginx/sites-enabled/flask_settings`
 - open the file: `sudo vi /etc/nginx/sites-enabled/flask_settings`
@@ -106,10 +106,11 @@ server {
 - restart the nginx service : `sudo /etc/init.d/nginx restart`
 - `which python` : to check which  version of python (2/3) is installed.
 - `sudo apt-get install python3-pip` : to instal pip
-- `sudo pip3 install virtaulenv` : to install virtualenv
+- `sudo pip3 install virtualenv` : to install virtualenv
 - `virtualenv <env name>` :to create a new env
 - `source <env name>/bin/activate` : to activate the environment
 - `python -V` : to check the version of python
 - `pip3 install flask gunicorn` : to install flask and gunicorn application server
 - no need of `app.run()`, gunicorn will take care of this
 - `gunicorn app:app` : to start the server (`gunicorn <filename>:<app name>`)
+- `which git` : to check if git is installed or not, if installed where it's installed
