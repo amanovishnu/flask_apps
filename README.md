@@ -46,7 +46,7 @@ Method #2:
 - json data = request.get_json()['<key>'] 
 - to know request method = request.method
 
-#### multiple of enabling debugging in flask run
+#### multiple ways of enabling debugging in flask run
 - SET FLASK_DEBUG=1 & flask run
 - app.run(debug=True) & python app.py
 - app.config['DEBUG'] = True & python app.py
@@ -123,3 +123,9 @@ server {
 - we can import these two methods from `from werkzeug.security import generate_password_hash, check_password_hash`
 - `password = generate_password_hash(<original password>, method=<hashing technique like sha256>)`
 - `check_password_hash(<hashed_pwd>,<actual_pwd>)` : returns true if both passwords match else returns false
+
+# generating session key in flask application
+```
+import os
+app.config['SECRET_KEY'] = os.urandom(24)
+```
