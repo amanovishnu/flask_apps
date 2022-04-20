@@ -1,22 +1,23 @@
 
 create table food (
-    id integer primary key auto_increment,
-    name text not null,
-    protein integer not null,
-    carbohydrates integer not null,
-    fat integer not null,
-    calories integer not null,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    protein INTEGER NOT NULL,
+    carbohydrates INTEGER NOT NULL,
+    fat INTEGER NOT NULL,
+    calories INTEGER NOT NULL
 );
 
 create table food_date (
-    food_id integer not null,
-    log_date_id integer not null,
-    primary key(food_id, log_date_id)
+    id INTEGER auto_increment,
+    food_id INTEGER NOT NULL,
+    log_date_id INTEGER NOT NULL,
+    PRIMARY KEY(food_id, log_date_id)
 );
 
 create table log_date (
-    id integer primary key auto_increment,
-    entry_date date not null
+    id INTEGER PRIMARY KEY AUTOINCREMENT
+    entry_date DATE NOT NULL
 );
 
 
