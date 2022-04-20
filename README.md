@@ -78,6 +78,9 @@ Method #2:
 - `db = get_db() -> cur = db.execute(<sql statement>) -> cur.fetchall()` -> steps to read data form sql
 - `db = get_db() -> db.execute(<sql statement>) -> db.commit()` -> steps to write data to sql
 - `db.execute('insert into users (name, location) values (?, ?)', ['Geek','USA'])` -> to prevent sql injection.
+- `cur.fetchall()` fetches all records whereas `fetchone()` fetches only one record.
+- `cur.fetchall()` -> returns a list of dictionaries
+- `cur.fetchone()` -> returns a single dictionary
 
 
 
