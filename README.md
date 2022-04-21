@@ -1,10 +1,10 @@
 # flask_apps
-##### ways to create  a virtualenv
+# ways to create  a virtualenv
 - anaconda: conda create --name <env name> python=<version>
 - venv: py -m venv <env name>
 - virtualenv: virtualenv <env name>
 
-##### Ways to activate a virtual environment
+# Ways to activate a virtual environment
 - anaconda: conda activate <env name>
 - venv:
     - <env name>/Scripts/activate (Windows)
@@ -13,13 +13,13 @@
     - <env name>/Scripts/activate (Windows)
     - <env name>/bin/activate (Linux)
 
-##### Ways to deactivate a virtual environment
+# Ways to deactivate a virtual environment
 - anaconda: conda deactivate
 - venv & virtualenv : deactivate
 
 SET FLASK_APP = app.py
 
-#### Ways to run a flask application
+# Ways to run a flask application
 Method #1:
     `if __name__ == "__main__": app.run()`
     - Add the above piece of code to the bottom of app.py
@@ -31,7 +31,7 @@ Method #2:
 
 - The method for running a flask app in production is completely different.
 
-#### different ways to send json data as response
+# different ways to send json data as response
     - jsonify(name="Mano", location="HYD", profile="DSE")
     - jsonify({"name":"Mano", "location":"HYD", "profile":"DSE"})
     - final output: 
@@ -40,31 +40,31 @@ Method #2:
             "location": "HYD",
             "profile": "DSE",
         }`
-#### different ways to get request data 
+# different ways to get request data 
 - Query String  = request.args.get[<key>]
 - form data = request.form[<key>]
 - json data = request.get_json()['<key>'] 
 - to know request method = request.method
 
-#### multiple ways of enabling debugging in flask run
+# multiple ways of enabling debugging in flask run
 - SET FLASK_DEBUG=1 & flask run
 - app.run(debug=True) & python app.py
 - app.config['DEBUG'] = True & python app.py
 - enabling debug mode provides a interactive shell kind of thing in browser in case of error for better debugging
 
-#### how to save & retrieve data in sessions
+# how to save & retrieve data in sessions
  - prerequisites: define a secret session key using `app.config['SECRET_KEY] = 'SomeRandomKey'`
  - import session from flask `from flask import session`
  - save data = session['key']
  - fetch data = session['key]
  - remove key from session = session.pop(<key>,None)
 
-##### ways to access content in html
+# ways to access content in html
 - `{{ value }}` -> used for accessing a value for dynamic generation of html
 - `{% text %} {% end text %}` -> used for implementing programing logic inside html using jinja
 - `{% if <condition> %} {% else %} {% endif %}` & `{% for <condition> %} {% endfor %}`
 
-#### template inheritance & include
+# template inheritance & include
 - `{% block <blockname> %} {% endblock %}` -> to create a block in base template
 - `{% extends 'base.html' %}` -> include base template in other files
 - `{{ super() }}` -> use this special function to avoid overwriting of base template block contents
@@ -83,7 +83,7 @@ Method #2:
 - `cur.fetchall()` -> returns a list of dictionaries
 - `cur.fetchone()` -> returns a single dictionary
 
-#### deploy app on amazon lightsail
+# deploy app on amazon lightsail
 - its a service for virtual servers, upload code to server and access it using ip address of server.
 - other alternatives are python anywhere and heroku (easier & beginner friendly)
 - `os -> ubuntu -> sudo apt-get update -> sudo apt-get install nginx`
@@ -157,4 +157,6 @@ app.config['SECRET_KEY'] = os.urandom(24)
 {% from "show_links.html" import show_links %}
 {{ show_links(user )}}
 ```
+
+<!-- # authentication of api's in flask -->
 
