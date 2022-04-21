@@ -157,3 +157,4 @@ app.config['SECRET_KEY'] = os.urandom(24)
 {% from "show_links.html" import show_links %}
 {{ show_links(user )}}
 ```
+

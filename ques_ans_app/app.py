@@ -1,12 +1,11 @@
 from operator import ge
 from flask import Flask, render_template, g, request, url_for, redirect, session
 from werkzeug.security import generate_password_hash, check_password_hash
-import os
 from database import get_db
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SECRET_KEY'] = os.urandom(24)
+app.config['SECRET_KEY'] = b'\x14\xc4\xc8(T\xca\xa3\x84\xd8u"\xd9<W?\xfe\x8a\xf0fQ\x11\x85\xb3v'
 
 @app.teardown_appcontext
 def close_db(error):
