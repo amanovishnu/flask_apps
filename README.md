@@ -129,3 +129,23 @@ server {
 import os
 app.config['SECRET_KEY'] = os.urandom(24)
 ```
+
+# sql tips:
+- always use `is` instead of `=` when querying for NULL values;
+- sql update query : `update users set name = <name > where id = <id>;`
+
+# macro's in flask
+- marcos are pretty much like functions in python. where it can be called from template and it can returns different output based on input
+- `{% macro <function_name(params)> %} <html content> {% endmacro %}` : to create a macro function.
+- `{% from <filename.html> import <function_name >%}` : to import macro to a template
+- `{{ <function_name(params)> }}` : to call a macro inside a template.
+```
+<!-- to define a macro -->
+{% macro show_links(user) %}
+    <!-- html logic -->
+{% endmacro %}
+
+<!-- to use a macro -->
+{% from "show_links.html" import show_links %}
+{{ show_links(user )}}
+```
