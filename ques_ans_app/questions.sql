@@ -1,5 +1,5 @@
 create table users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY ,
     name TEXT NOT NULL,
     password TEXT NOT NULL,
     expert BOOLEAN NOT NULL,
@@ -7,7 +7,7 @@ create table users (
 );
 
 create table questions (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY ,
     question_text TEXT NOT NULL,
     answer_text TEXT,
     asked_by_id INTEGER NOT NULL,
