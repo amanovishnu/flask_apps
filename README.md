@@ -116,6 +116,14 @@ server {
 - `gunicorn app:app` : to start the server (`gunicorn <filename>:<app name>`)
 - `which git` : to check if git is installed or not, if installed where it's installed
 
+# deployment steps in heroku
+- heroku does not have native support for sqlite3
+- create a `Procfile` : it instructs heroku web workers on how to run the app
+- Procfile -> `web: gunicorn app:app` -> tells heroku web worker to run `gunicorn app:app`
+- `heroku create` : creates a new app in heroku
+- `git push heroku master` : commit changes and push to heroku master -> app will be deployed to heroku
+- `heroku logs tail` : returns the last few lines of logs
+
 # security in flask
 - `werkzeug.security` module provides security related methods in flask
 - `generate_password_hash` is used to generate a password hash.
