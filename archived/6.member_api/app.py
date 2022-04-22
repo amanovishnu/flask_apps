@@ -1,4 +1,4 @@
-from flask import Flask, g , request, jsonify
+from flask import Flask, g, request, jsonify
 from database import get_db
 from functools import wraps
 
@@ -8,15 +8,17 @@ app.config['debug'] = True
 api_username = "admin"
 api_password = "password"
 
+
 def protected(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         auth = request.authorization
-        if auth and auth.username == api_username and auth.password == api_password:
+        if (auth and auth.username == api_username and auth.password == api_password):
             return f(*args, **kwargs)
         else:
-            return jsonify({"message":"authentication failed"}), 403
+            return jsonify({"message": "authentication failed"}), 403
     return decorated
+
 
 @app.teardown_appcontext
 def close_db(error):
@@ -39,22 +41,23 @@ def get_members():
             "level": member['level']
         }
         members_list.append(temp)
-    return jsonify(members = members_list)
-
+    return jsonify(members=members_list)
 
 
 @app.route('/member/<int:member_id>', methods=['GET'])
 @protected
 def get_member(member_id):
     db = get_db()
-    member_cur = db.execute('select id, name, email, level from members where id = ? ;', [member_id])
+    member_cur = db.execute('''
+                            select id, name, email, level from members
+                            where id = ? ;''', [member_id])
     member = member_cur.fetchone()
     return jsonify({
-        "member":{
-            "id":member["id"],
-            "name":member["name"],
-            "email":member["email"],
-            "level":member["level"]
+        "member": {
+            "id": member["id"],
+            "name": member["name"],
+            "email": member["email"],
+            "level": member["level"]
         }
     })
 
@@ -67,9 +70,13 @@ def add_member():
     email = member_data['email']
     level = member_data['level']
     db = get_db()
-    db.execute('insert into members (name, email, level) values (?, ?, ?)', [name, email, level])
+    db.execute('''
+                insert into members (name, email, level)
+                values (?, ?, ?)''', [name, email, level])
     db.commit()
-    member_cur = db.execute('select id, name, email, level from members where name = ?',[name])
+    member_cur = db.execute('''
+                                select id, name, email, level from members
+                                where name = ?''', [name])
     member_result = member_cur.fetchone()
     return jsonify({
         "member": {
@@ -89,9 +96,13 @@ def edit_member(member_id):
     email = member_data['email']
     level = member_data['level']
     db = get_db()
-    db.execute('update members set name = ?, email = ?, level = ? where id = ?',[name, email, level, member_id])
+    db.execute('''
+                update members set name = ?, email = ?, level = ?
+                where id = ?''', [name, email, level, member_id])
     db.commit()
-    member_cur = db.execute('select id, name, email, level from members where id = ?',[member_id])
+    member_cur = db.execute('''
+                            select id, name, email, level from members
+                            where id = ?''', [member_id])
     member_result = member_cur.fetchone()
     return jsonify({
         "member": {
@@ -109,7 +120,7 @@ def delete_member(member_id):
     db = get_db()
     db.execute('delete from members where id = ?', [member_id])
     db.commit()
-    return jsonify({"message":"member has been deleted successfully"})
+    return jsonify({"message": "member has been deleted successfully"})
 
 
 if __name__ == '__main__':
