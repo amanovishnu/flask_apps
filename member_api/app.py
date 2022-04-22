@@ -1,8 +1,22 @@
 from flask import Flask, g , request, jsonify
 from database import get_db
+from functools import wraps
 
 app = Flask(__name__)
 app.config['debug'] = True
+
+api_username = "admin"
+api_password = "password"
+
+def protected(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if auth and auth.username == api_username and auth.password == api_password:
+            return f(*args, **kwargs)
+        else:
+            return jsonify({"message":"authentication failed"}), 403
+    return decorated
 
 @app.teardown_appcontext
 def close_db(error):
@@ -11,6 +25,7 @@ def close_db(error):
 
 
 @app.route('/member', methods=['GET'])
+@protected
 def get_members():
     db = get_db()
     members_cur = db.execute('select id, name, email, level from members;')
@@ -27,7 +42,9 @@ def get_members():
     return jsonify(members = members_list)
 
 
+
 @app.route('/member/<int:member_id>', methods=['GET'])
+@protected
 def get_member(member_id):
     db = get_db()
     member_cur = db.execute('select id, name, email, level from members where id = ? ;', [member_id])
@@ -43,6 +60,7 @@ def get_member(member_id):
 
 
 @app.route('/member', methods=['POST'])
+@protected
 def add_member():
     member_data = request.get_json()
     name = member_data['name']
@@ -64,6 +82,7 @@ def add_member():
 
 
 @app.route('/member/<int:member_id>', methods=['PUT', 'PATCH'])
+@protected
 def edit_member(member_id):
     member_data = request.get_json()
     name = member_data['name']
@@ -85,6 +104,7 @@ def edit_member(member_id):
 
 
 @app.route('/member/<int:member_id>', methods=['DELETE'])
+@protected
 def delete_member(member_id):
     db = get_db()
     db.execute('delete from members where id = ?', [member_id])
