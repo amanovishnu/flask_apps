@@ -158,6 +158,7 @@ app.config['SECRET_KEY'] = os.urandom(24)
 
 - always use `is` instead of `=` when querying for NULL values;
 - sql update query : `update users set name = <name > where id = <id>;`
+- sql delete query : `delete from users where id = <id>;`
 
 ## Macro's in flask
 
@@ -205,3 +206,49 @@ def protected(f):
 - `os.getcwd()` -> returns the path of current working directory
 - `os.path.join(<path_one>,<path_two>)` -> appends path_two to path_one.
 - `pip freeze > requirements.txt` -> generates a requirements.txt file
+- `app.config.form_pyfile(<filename.cfg>)` -> to load config details from an external config file
+
+## Flask SQLAlchemy
+
+- Steps to define a table using SQLAlchemy
+
+```python
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+db = SQLAlchemy(app) # creates a db object
+
+class Test(db.Model): # defines a db table
+    id = db.Column(db.Integer, primary_key=True) # defines table columns
+```
+
+- Steps to create a table defined using SQLAlchemy
+
+```python
+from application import db
+db.create_all()
+```
+
+```python
+# add data using SQLAlchemy
+anthony = Member(name= 'anthony', password= 'secret', email= 'email@gmail.com', joined_date= datetime.today())
+db.session.add(anthony)
+db.session.commit()
+
+# delete data using SQLAlchemy
+db.session.delete(anthony)
+db.session.commit()
+
+# update data using SQLAlchemy
+anthony.password = 'newSecretPassword'
+anthony.email = 'anthony@gmail.com'
+db.session.commit()
+
+# read data using SQLAlchemy
+all_record = Member.query.all() # gets all data in member table.
+first_record = Member.query.first() # gets the first row from member table
+record_filter_by = Member.query.filter_by(name= 'steven') # fetches all matching records
+first_record_filter_by = Member.query.filter_by(name= 'steven').first() # fetches first matching records
+only_filter = Member.query.filter(Member.name.endswith('ert')).all() # fetches all records having name ends with 'ert'
+```
