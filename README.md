@@ -39,11 +39,11 @@
 - `jsonify({"name":"Mano", "location":"HYD", "profile":"DSE"})`
 
 ```json
-        `{
+        {
             "name": "Mano",
             "location": "HYD",
             "profile": "DSE",
-        }`
+        }
 ```
 
 ## different ways to get request data
