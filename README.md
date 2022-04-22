@@ -1,6 +1,6 @@
 # flask_apps
 
-## ways to create  a virtualenv
+## Ways to create  a virtualenv
 
 - anaconda: `conda create --name <env name> python=<version>`
 - venv: `py -m venv <env name>`
@@ -33,35 +33,34 @@
 - `flask run`
 - The method for running a flask app in production is completely different.
 
-## different ways to send json data as response
+## Different ways to send json data as response
 
 - `jsonify(name="Mano", location="HYD", profile="DSE")`
 - `jsonify({"name":"Mano", "location":"HYD", "profile":"DSE"})`
 
-```python
-    # json output
-        `{
+```json
+        {
             "name": "Mano",
             "location": "HYD",
             "profile": "DSE",
-        }`
+        }
 ```
 
-## different ways to get request data
+## Different ways to get request data
 
 - Query String = `request.args.get[<key>]`
 - form data = `request.form[<key>]`
 - json data = `request.get_json()['<key>']`
 - to know request method = `request.method`
 
-## multiple ways of enabling debugging in flask run
+## Multiple ways of enabling debugging in flask run
 
 - `SET FLASK_DEBUG=1 & flask run`
 - `app.run(debug=True) & python app.py`
 - `app.config['DEBUG'] = True & python app.py`
 - enabling debug mode provides a interactive shell kind of thing in browser in case of error for better debugging
 
-## how to save & retrieve data in sessions
+## How to save & retrieve data in sessions
 
 - prerequisites: define a secret session key using `app.config['SECRET_KEY] = 'SomeRandomKey'`
 - import session from flask `from flask import session`
@@ -69,13 +68,13 @@
 - fetch data = `session['key]`
 - remove key from session = `session.pop(<key>, None)`
 
-## ways to access content in html
+## Ways to access content in html
 
 - `{{ value }}` -> used for accessing a value for dynamic generation of html
 - `{% text %} {% end text %}` -> used for implementing programing logic inside html using jinja
 - `{% if <condition> %} {% else %} {% endif %}` & `{% for <condition> %} {% endfor %}`
 
-## template inheritance & include
+## Template inheritance & include
 
 - `{% block <blockname> %} {% endblock %}` -> to create a block in base template
 - `{% extends 'base.html' %}` -> include base template in other files
@@ -94,7 +93,7 @@
 - `cur.fetchall()` -> returns a list of dictionaries
 - `cur.fetchone()` -> returns a single dictionary
 
-## deploy app on amazon lightsail
+## Deploy app on amazon lightsail
 
 - its a service for virtual servers, upload code to server and access it using ip address of server.
 - other alternatives are python anywhere and heroku (easier & beginner friendly)
@@ -130,7 +129,7 @@ server {
 - `gunicorn app:app` : to start the server (`gunicorn <filename>:<app name>`)
 - `which git` : to check if git is installed or not, if installed where it's installed
 
-# deployment steps in heroku
+## Deployment steps in heroku
 
 - heroku does not have native support for sqlite3
 - create a `Procfile` : it instructs heroku web workers on how to run the app
@@ -139,7 +138,7 @@ server {
 - `git push heroku master` : commit changes and push to heroku master -> app will be deployed to heroku
 - `heroku logs tail` : returns the last few lines of logs
 
-# security in flask
+## Security in flask
 
 - `werkzeug.security` module provides security related methods in flask
 - `generate_password_hash` is used to generate a password hash.
@@ -148,19 +147,19 @@ server {
 - `password = generate_password_hash(<original password>, method=<hashing technique like sha256>)`
 - `check_password_hash(<hashed_pwd>,<actual_pwd>)` : returns true if both passwords match else returns false
 
-# generating session key in flask application
+## Generating session key in flask application
 
 ```python
 import os
 app.config['SECRET_KEY'] = os.urandom(24)
 ```
 
-## sql tips
+## SQL tips
 
 - always use `is` instead of `=` when querying for NULL values;
 - sql update query : `update users set name = <name > where id = <id>;`
 
-## macro's in flask
+## Macro's in flask
 
 - marcos are pretty much like functions in python. where it can be called from template and it can returns different output based on input
 - `{% macro <function_name(params)> %} <html content> {% endmacro %}` : to create a macro function.
@@ -178,12 +177,13 @@ app.config['SECRET_KEY'] = os.urandom(24)
 {{ show_links(user )}}
 ```
 
-# authentication of api's in flask
+## Authentication of api's in flask
 
-- for basic authentication use `request.authorization.username` and `request.authorization.password` from request module.
-- pass status code along with return statement `return jsonify(), <status code>` -> `return jsonify({"mes":"failed"}), 403`
+- for basic authentication use `request.authorization.username` & `request.authorization.password` from request module.
+- pass status code with return statement `return jsonify(), <status code>`
+- example: `return jsonify({"message":"failed"}), 403`
 
-## creating a decorator in flask
+## Creating a decorator in flask
 
 - always place the custom decorator below the flask decorators
 
@@ -200,7 +200,7 @@ def protected(f):
     return decorated
 ```
 
-## general tips in flask
+## General tips in flask
 
 - `os.getcwd()` -> returns the path of current working directory
 - `os.path.join(<path_one>,<path_two>)` -> appends path_two to path_one.
