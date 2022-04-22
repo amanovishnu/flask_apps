@@ -38,7 +38,7 @@
 - `jsonify(name="Mano", location="HYD", profile="DSE")`
 - `jsonify({"name":"Mano", "location":"HYD", "profile":"DSE"})`
 
-```python
+```json
     # json output
         `{
             "name": "Mano",
