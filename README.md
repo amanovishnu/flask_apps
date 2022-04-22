@@ -158,5 +158,26 @@ app.config['SECRET_KEY'] = os.urandom(24)
 {{ show_links(user )}}
 ```
 
-<!-- # authentication of api's in flask -->
+# authentication of api's in flask
+- for basic authentication use `request.authorization.username` and `request.authorization.password` from request module.
+- pass status code along with return statement `return jsonify(), <status code>` -> `return jsonify({"mes":"failed"}), 403`
 
+## creating a decorator in flask
+- always place the custom decorator below the flask decorators
+```
+from functools import wraps
+def protected(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if auth and auth.username = api_username and auth.password == api_password:
+            return f(*args, **kwargs)
+        else:
+            return jsonify({"message":"authorization failed"}), 403
+    return decorated
+```
+
+## general tips in flask 
+- `os.getcwd()` -> returns the path of current working directory
+- `os.path.join(<path_one>,<path_two>)` -> appends path_two to path_one.
+- `pip freeze > requirements.txt` -> generates a requirements.txt file
