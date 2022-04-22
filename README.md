@@ -1,4 +1,5 @@
 # flask_apps
+
 # ways to create  a virtualenv
 - anaconda: conda create --name <env name> python=<version>
 - venv: py -m venv <env name>

@@ -68,7 +68,7 @@ def add_member():
     level = member_data['level']
     db = get_db()
     db.execute('insert into members (name, email, level) values (?, ?, ?)', [name, email, level])
-    db.commit()   
+    db.commit()
     member_cur = db.execute('select id, name, email, level from members where name = ?',[name])
     member_result = member_cur.fetchone()
     return jsonify({
