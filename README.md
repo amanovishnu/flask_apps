@@ -251,4 +251,32 @@ first_record = Member.query.first() # gets the first row from member table
 record_filter_by = Member.query.filter_by(name= 'steven') # fetches all matching records
 first_record_filter_by = Member.query.filter_by(name= 'steven').first() # fetches first matching records
 only_filter = Member.query.filter(Member.name.endswith('ert')).all() # fetches all records having name ends with 'ert'
+q = Member.query.filter(Member.name == 'mano').all() # equal to
+q = Member.query.filter(Member.name != 'mano').all() # not equal to
+q = Member.query.filter(Member.name.like('%no')).all() # like
+q = Member.query.filter(Member.name.not_like('%no')).all() # not like
+q = Member.query.filter(Member.name.in_(<list of entries>)).all() # in
+q = Member.query.filter(~Member.name.in_(<list of entries>)).all() # not in
+q = Member.query.filter(Member.email == None).all() # null value
+q = Member.query.filter(Member.email != None).all() # not null
+q = Member.query.filter(Member.name == 'mano').filter(Member.email == 'geeky@gmail.com').all() # and -> 1.Generative way
+q = Member.query.filter(Member.name == 'mano', Member.email == 'geeky@gmail.com').all() # and -> 2
+q = Member.query.filter(db.and_(Member.name == 'mano', Member.email == 'geeky@gmail.com')).all() # and -> 3
+q = Member.query.filter(db.or_(Member.name == 'mano', Member.email == None)).all() # or
+q = Member.query.order_by(Member.name).all() # order by asc
+q = Member.query.order_by(Member.name.desc()).all() # order by desc
+q = Member.query.limit(<int>).all() # limit
+q = Member.query.offset(<int>).all() # offset
+q = Member.query.count() # count
+q = Member.query.filter(Member.id <in equality operator> 1).all() # in equality
+
+```
+
+## Working with flask-wtf
+
+- install flask-wtf using `pip install flask-wtf`
+
+```python
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField
 ```
