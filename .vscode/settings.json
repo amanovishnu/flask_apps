@@ -4,10 +4,12 @@
     "python.linting.pylintEnabled": false,
     "cSpell.words": [
         "appname",
+        "atleast",
         "projectname",
         "runserver",
         "startapp",
         "strartproject",
+        "urlpatterns",
         "wsgi"
     ]
 }
