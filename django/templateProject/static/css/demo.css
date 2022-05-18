@@ -1,0 +1,17 @@
+body {
+    background-color: peachpuff;
+    font-weight: bold;
+    text-align: left;
+}
+
+img {
+    height: 200;
+    width: 200px;
+    border: 1px solid red groove;
+    margin: 0% 20%;
+}
+
+h1 {
+    color: blue;
+    text-align: center;
+}
